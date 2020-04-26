@@ -1,0 +1,58 @@
+#application.yml相比与application.properties更加简洁
+#web容器相关配置
+server:
+  port: 8080
+  address: 127.0.0.1
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+#  扫描所有对应的数据表实体类Bean，多个package用逗号或者分号分隔
+  type-aliases-package: com.lyp.springboot01.authmanage.model
+  config-location: classpath:config/mybatis-config.xml
+
+#数据库连接池
+spring:
+  datasource:
+    username: root
+    password: aaaaaa
+    url: jdbc:mysql://localhost:3306/springboot01?serverTimeZone=UTC&characterEncoding=utf8
+    driver-class-name: com.mysql.jdbc.Driver
+#    使用druid数据源
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    maxActive: 20
+#    initialSize: 1
+#    maxWait: 60000
+#    minIdel: 1
+  application:
+    name: freemarker
+  freemarker:
+    template-loader-path: classpath:/templates/*
+    cache: false
+    charset: UTF-8
+     # freemarker模板后缀 默认是 .ftlh
+#    suffix: .html
+     # 是否为此技术启用MVC视图分辨率。
+    enabled: true
+    check-template-location: true
+    content-type: text/html
+    #设定所有request的属性在merge到模板的时候，是否要都添加到model中
+    expose-request-attributes: true
+    expose-session-attributes: true
+    #指定requestContext属性的名
+    request-context-attribute: request
+
+
+  redis:
+    database: 0
+#    host: 192.168.160.66
+#    password: 123456
+    host: 127.0.0.1
+    port: 6379
+    timeout: 30000
+
+
+
+
+
+
+

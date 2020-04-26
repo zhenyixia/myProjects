@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lyp.springboot01.authmanage.mapper.UserMapper">
+    <resultMap id="BaseResultMap1" type="com.lyp.springboot01.authmanage.model.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="role" property="role" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!--重点,如果用户表和书表，中主键名字一样比如例子中都为ID，那么1对多的情况下，
+    会发现查询的book对象只会有一条数据，所以SQL使用别名来处理，结果就正常了！-->
+    <resultMap id="BaseResultMap2" type="com.lyp.springboot01.authmanage.model.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="role" property="role" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <collection property="books" ofType="com.lyp.springboot01.authmanage.model.Book">
+            <id column="b_id" jdbcType="BIGINT" property="id"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <!--<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />-->
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, password, phone
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into auth_user(name,password,phone) values(#{name},#{password},#{phone})
+    </insert>
+
+
+    <select id="getUserAll" resultMap="BaseResultMap1">
+        SELECT * FROM auth_user
+    </select>
+
+    <select id="getUserById" resultMap="BaseResultMap2">
+        SELECT a.*,b.ID as b_id,b.NAME FROM auth_user a , book b WHERE a.ID=b.U_ID AND a.ID = #{id}
+    </select>
+
+
+</mapper>

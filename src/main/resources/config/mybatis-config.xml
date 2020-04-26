@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--配置全局映射器 缓存是否可用-->
+        <setting name="cacheEnabled" value="false"/>
+
+        <!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+
+        <!-- 当启用时，有延迟加载属性的对象在被调用时将会完全加载任意属性。否则，每种属性将会按需要加载 -->
+        <setting name="aggressiveLazyLoading" value="true"/>
+
+        <!--是否开启自动驼峰命名规则映射，即从经典数据库列名 A_COLUMN 到经典 Java 属性名 aColumn 的类似映射。-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+        <!--MyBatis利用本地缓存机制(Local Cache)防止循环引用(circular references)和
+        加速重复嵌套查询。 默认值为 SESSION，这种情况下会缓存一个会话中执行的所有查询。
+        若设置值为 STATEMENT，本地会话仅用在语句执行上，对相同 SqlSession 的不同调用将不会共享数据。-->
+        <setting name="localCacheScope" value="SESSION"/>
+
+
+    </settings>
+
+    <!--别名定义-->
+    <typeAliases>
+
+
+        <!-- 批量别名定义,指定包名，mybatis自动扫描包中的po类，
+        自动定义别名，别名是类名(首字母大写或小写都可以,一般用小写) -->
+        <package name="com.lyp.springboot01.authmanage.model"/>
+    </typeAliases>
+
+</configuration>
