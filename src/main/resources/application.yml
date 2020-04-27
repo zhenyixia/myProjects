@@ -23,24 +23,23 @@ spring:
 #    initialSize: 1
 #    maxWait: 60000
 #    minIdel: 1
-  application:
-    name: freemarker
-  freemarker:
-    template-loader-path: classpath:/templates/*
-    cache: false
-    charset: UTF-8
-     # freemarker模板后缀 默认是 .ftlh
-#    suffix: .html
-     # 是否为此技术启用MVC视图分辨率。
-    enabled: true
-    check-template-location: true
-    content-type: text/html
-    #设定所有request的属性在merge到模板的时候，是否要都添加到model中
-    expose-request-attributes: true
-    expose-session-attributes: true
-    #指定requestContext属性的名
-    request-context-attribute: request
 
+  freemarker:
+    suffix: .ftl
+    charset: UTF-8
+    content-type: text/html
+    template-loader-path: classpath:/templates/
+     # freemarker模板后缀 默认是 .ftlh
+     # 是否为此技术启用MVC视图分辨率。
+#    enabled: true
+#    check-template-location: true
+    #设定所有request的属性在merge到模板的时候，是否要都添加到model中
+#    expose-request-attributes: true
+#    expose-session-attributes: true
+    #指定requestContext属性的名
+#    request-context-attribute: request
+  mvc:
+      static-path-pattern: /static/**
 
   redis:
     database: 0
@@ -51,6 +50,21 @@ spring:
     timeout: 30000
 
 
+mail:
+  smtp:
+    auth: true
+    port: 465
+    timeout: 5000
+  auth:
+    name: zyx@163.com
+    password: HIXZNWASYMDFPARH
+  transport:
+    protocol: smtp
+  send:
+    charset: utf-8
+  is:
+    ssl: true
+  host: smtp.163.com
 
 
 
