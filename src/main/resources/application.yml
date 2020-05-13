@@ -14,7 +14,7 @@ mybatis:
 spring:
   datasource:
     username: root
-    password: aaaaaa
+    password: ENC(rZtEMVKyvFGWd0o8177Rwg==)
     url: jdbc:mysql://localhost:3306/springboot01?serverTimeZone=UTC&characterEncoding=utf8
     driver-class-name: com.mysql.jdbc.Driver
 #    使用druid数据源
@@ -56,8 +56,9 @@ mail:
     port: 465
     timeout: 5000
   auth:
-    name: zyx@163.com
-    password: HIXZNWASYMDFPARH
+    name: zyx_2017@163.com
+    password: HWbRmZ+rptL92fzX0C9itQyys+vNv34potaEYWXZdZM=
+
   transport:
     protocol: smtp
   send:
@@ -65,6 +66,14 @@ mail:
   is:
     ssl: true
   host: smtp.163.com
+
+#******************加解密相关配置*******************
+#jasypt:
+#    encrytor:
+        #用来加解密的salt值
+#        password:
+        #用来使用新的算法，默认为org.jasypt.salt.NoOPIVGenerator,这样的话我们就无法使用命令行中生成的密文
+#        ivGeneratorClassname: org.jasypt.salt.RandomIVGenerator
 
 
 
