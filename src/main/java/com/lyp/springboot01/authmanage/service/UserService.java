@@ -3,6 +3,7 @@ package com.lyp.springboot01.authmanage.service;
 import com.lyp.springboot01.authmanage.model.User;
 
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -15,4 +16,6 @@ public interface UserService {
   int deleteUser(int id);
 
   int updateUser(User user);
+
+  Object batchImportBooks(MultipartFile file);
 }

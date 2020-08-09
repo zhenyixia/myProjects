@@ -9,6 +9,11 @@ import java.util.Map;
 
 /**
  * 全局异常处理
+ *
+ * ControllerAdvice，这是一个增强的 Controller。使用这个 Controller ，可以实现三个方面的功能：
+ * 1,全局异常处理
+ * 2,全局数据绑定
+ * 3,全局数据预处理
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {

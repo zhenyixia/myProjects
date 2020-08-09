@@ -32,6 +32,10 @@ public class JsonResult {
 
     private Object data;
 
+    public JsonResult(){
+
+    }
+
     public JsonResult(boolean status, int code, String msg, Object data) {
         this.status = status;
         this.code = code;
@@ -52,7 +56,7 @@ public class JsonResult {
     }
 
     public static JsonResult fail(String msg) {
-        return fail(400, msg);
+        return fail(500, msg);
     }
 
     public static JsonResult fail(int code, String msg) {

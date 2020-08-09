@@ -48,6 +48,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 30000
+#热部署配置 -- 最终未生效
+#  devtools:
+#    restart:
+#      enabled: true
+#      additional-paths: src/main/java
 
 
 mail:
