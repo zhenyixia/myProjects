@@ -10,8 +10,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = {Springboot01Application.class})
-public class Springboot01ApplicationTests {
+@SpringBootTest(classes = {Runner.class})
+public class RunnerTests {
 
     //操作类型都string用这个
     @Autowired

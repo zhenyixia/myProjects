@@ -13,10 +13,10 @@ import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 @SpringBootApplication
 @MapperScan("com.lyp.springboot01.authmanage.mapper")
 @ConditionalOnClass(SpringfoxWebMvcConfiguration.class)
-public class Springboot01Application implements WebMvcConfigurer {
+public class Runner implements WebMvcConfigurer {
 
   public static void main(String[] args) {
-    SpringApplication.run(Springboot01Application.class, args);
+    SpringApplication.run(Runner.class, args);
   }
 
   @Override
