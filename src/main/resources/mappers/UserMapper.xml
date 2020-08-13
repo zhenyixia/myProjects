@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap1" type="com.lyp.springboot01.authmanage.model.User">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
         <result column="role" property="role" jdbcType="VARCHAR"/>
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
@@ -15,7 +15,7 @@
     <resultMap id="BaseResultMap2" type="com.lyp.springboot01.authmanage.model.User">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
         <result column="role" property="role" jdbcType="VARCHAR"/>
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
@@ -26,20 +26,20 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name, password, phone
+        id, name, pwd, phone
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into auth_user(name,password,phone) values(#{name},#{password},#{phone})
+        insert into tbl_user(name,pwd,phone) values(#{name},#{pwd},#{phone})
     </insert>
 
 
     <select id="getUserAll" resultMap="BaseResultMap1">
-        SELECT * FROM auth_user
+        SELECT * FROM tbl_user
     </select>
 
     <select id="getUserById" resultMap="BaseResultMap2">
-        SELECT a.*,b.ID as b_id,b.NAME FROM auth_user a , book b WHERE a.ID=b.U_ID AND a.ID = #{id}
+        SELECT a.*,b.ID as b_id,b.NAME FROM tbl_user a , book b WHERE a.ID=b.U_ID AND a.ID = #{id}
     </select>
 
 

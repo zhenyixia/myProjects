@@ -26,9 +26,9 @@ public class RedisController {
 
     @Cacheable
     @GetMapping("/cache/user/{id}")
-    public User getCacheUser(@PathVariable int id) {
+    public User getCacheUser(@PathVariable long id) {
         User user = new User();
-        user.setPassword("12345");
+        user.setPwd("12345");
         user.setId(id);
         user.setName("lyp" + id);
         System.out.println("查询数据库getUser: " + id);
@@ -38,10 +38,10 @@ public class RedisController {
 
     @CachePut(value = "user")
     @GetMapping("/update/user/{id}")
-    public User updateUser(@PathVariable int id) {
+    public User updateUser(@PathVariable long id) {
         User user = new User();
-        user.setPassword("12345");
-        user.setId(123);
+        user.setPwd("12345");
+        user.setId(123l);
         user.setName("lyp" + id + "--update");
         System.out.println("update id: " + id);
         return user;

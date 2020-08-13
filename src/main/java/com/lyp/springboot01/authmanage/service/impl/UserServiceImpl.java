@@ -6,11 +6,11 @@ import com.lyp.springboot01.authmanage.service.UserService;
 import com.lyp.springboot01.common.bean.JsonResult;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service(value = "userService")
@@ -38,10 +38,10 @@ public class UserServiceImpl implements UserService {
     log.info("id  is {}", user.getId());
 
     //模拟异常 测试事务注解
-//        String str = null;
-//        System.out.println(str.length());
-//        user.setName(user.getName() + "1");
-//        userMapper.insert(user);
+    //        String str = null;
+    //        System.out.println(str.length());
+    //        user.setName(user.getName() + "1");
+    //        userMapper.insert(user);
 
     return 1;
   }
@@ -64,7 +64,17 @@ public class UserServiceImpl implements UserService {
 
     JsonResult result = new JsonResult();
     //记录集合
-    List<Map> mapList = new ArrayList<Map>();
+    List<User> mapList = new ArrayList<>();
+
+    int insertNum = 200;
+    if (!CollectionUtils.isEmpty(mapList)) {
+      for (int i = 0, size = mapList.size(); i < size; i += insertNum) {
+        int toIndex = Math.min(i + insertNum, size);
+        List<User> tempList = mapList.subList(i, toIndex);
+        userMapper.batchInsertUsers(tempList);
+      }
+    }
+
     return result;
   }
 }

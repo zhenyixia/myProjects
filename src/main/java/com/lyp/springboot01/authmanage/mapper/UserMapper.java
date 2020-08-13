@@ -2,7 +2,6 @@ package com.lyp.springboot01.authmanage.mapper;
 
 import com.lyp.springboot01.authmanage.model.User;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,4 +25,6 @@ public interface UserMapper {
   List<User> getUserAll();
 
   User getUserById(Integer id);
+
+  void batchInsertUsers(List<User> tempList);
 }

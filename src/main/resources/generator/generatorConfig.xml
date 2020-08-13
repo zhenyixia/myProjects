@@ -70,14 +70,14 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>-->
         <!--mybatis的mapper接口-->
-        <javaClientGenerator targetPackage="com.lyp.springboot01.authmanage.mapper" targetProject="${project}" type="XMLMAPPER" >
+       <!-- <javaClientGenerator targetPackage="com.lyp.springboot01.authmanage.mapper" targetProject="${project}" type="XMLMAPPER" >
             <property name="enableSubPackages" value="false" />
-        </javaClientGenerator>
+        </javaClientGenerator>-->
         <!--<javaClientGenerator targetPackage="com.lyp.springboot01.authmanage.mapper" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>-->
         <!--要生成的表结构-->
-        <table tableName="book" domainObjectName="Book"
+        <table tableName="tbl_user" domainObjectName="User"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
