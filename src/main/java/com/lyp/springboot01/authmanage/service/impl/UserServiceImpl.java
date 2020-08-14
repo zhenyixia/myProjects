@@ -1,6 +1,7 @@
 package com.lyp.springboot01.authmanage.service.impl;
 
 import com.lyp.springboot01.authmanage.mapper.UserMapper;
+import com.lyp.springboot01.authmanage.model.QueryUserVO;
 import com.lyp.springboot01.authmanage.model.User;
 import com.lyp.springboot01.authmanage.service.UserService;
 import com.lyp.springboot01.common.bean.JsonResult;
@@ -20,17 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserServiceImpl implements UserService {
 
   @Autowired
-  UserMapper userMapper;
+  private UserMapper userMapper;
 
-  @Override
-  public List<User> findAllUser(int pageNum, int pageSize) {
-    return userMapper.queryAll();
-  }
-
-  @Override
-  public User findById(int id) {
-    return userMapper.getUserById(id);
-  }
 
   @Transactional
   @Override
@@ -40,22 +32,6 @@ public class UserServiceImpl implements UserService {
     userMapper.insert(user);
     log.info("Add user info successfully. id  is {}", user.getId());
     return JsonResult.success("添加用户成功");
-  }
-
-  @Override
-  public JsonResult deleteUser(long id) {
-    log.info("Begin to delete user by id:{}.", id);
-    int result = userMapper.delete(id);
-
-    log.info("Delete user number is: {}.", result);
-    String msg = MessageFormat.format("成功删除{0}条数据", result);
-    return JsonResult.success(msg);
-
-  }
-
-  @Override
-  public int updateUser(User user) {
-    return userMapper.update(user);
   }
 
   @Override
@@ -78,5 +54,41 @@ public class UserServiceImpl implements UserService {
     }
 
     return result;
+  }
+
+  @Override
+  public JsonResult deleteUser(long id) {
+    log.info("Begin to delete user by id:{}.", id);
+    int result = userMapper.delete(id);
+
+    log.info("Delete user number is: {}.", result);
+    String msg = MessageFormat.format("成功删除{0}条数据", result);
+    return JsonResult.success(msg);
+  }
+
+  @Override
+  public JsonResult updateUser(User user) {
+    log.info("Begin to update user.");
+    int updateNum = userMapper.update(user);
+
+    log.info("Update user number is: {}.", updateNum);
+    if (updateNum == 1) {
+      return JsonResult.success("修改成功");
+    }
+
+    return JsonResult.fail("修改失败，请刷新重试");
+  }
+
+
+  @Override
+  public JsonResult findAllUser(QueryUserVO queryVO) {
+    int page = queryVO.getPage();
+    int size = queryVO.getSize();
+    int beginIndex = (page - 1) * size;
+    queryVO.setBeginIndex(beginIndex);
+
+    List<User> users = userMapper.selectByCondition(queryVO);
+    log.info("Query users from database successfully. user number is: {}.", users.size());
+    return JsonResult.success("查询成功", users);
   }
 }

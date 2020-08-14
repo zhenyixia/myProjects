@@ -2,17 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lyp.springboot01.authmanage.mapper.UserMapper">
-  <resultMap id="BaseResultMap1" type="com.lyp.springboot01.authmanage.model.User">
-    <id column="id" property="id" jdbcType="INTEGER"/>
-    <result column="name" property="name" jdbcType="VARCHAR"/>
-    <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
-    <result column="phone" property="phone" jdbcType="VARCHAR"/>
-    <result column="role" property="role" jdbcType="VARCHAR"/>
-    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
-  </resultMap>
   <!--重点,如果用户表和书表，中主键名字一样比如例子中都为ID，那么1对多的情况下，
   会发现查询的book对象只会有一条数据，所以SQL使用别名来处理，结果就正常了！-->
-  <resultMap id="BaseResultMap2" type="com.lyp.springboot01.authmanage.model.User">
+  <resultMap id="BaseResultMap" type="com.lyp.springboot01.authmanage.model.User">
     <id column="id" property="id" jdbcType="INTEGER"/>
     <result column="name" property="name" jdbcType="VARCHAR"/>
     <result column="sex" property="sex" jdbcType="VARCHAR"/>
@@ -28,8 +20,9 @@
      </collection>-->
   </resultMap>
   <sql id="Base_Column_List">
-        id, name, pwd, phone
-    </sql>
+    id, name, sex, pwd, phone, role, create_time, update_time
+  </sql>
+
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.lyp.springboot01.authmanage.model.User">
     insert into tbl_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -75,14 +68,58 @@
     </trim>
   </insert>
 
+  <update id="update" parameterType="com.lyp.springboot01.authmanage.model.User">
+    update tbl_user
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
 
-  <select id="getUserAll" resultMap="BaseResultMap1">
-        SELECT * FROM tbl_user
+  <select id="getUserAll" resultMap="BaseResultMap">
+        SELECT * FROM tbl_user order by update_time desc;
     </select>
 
-  <select id="getUserById" resultMap="BaseResultMap2">
+  <select id="getUserById" resultMap="BaseResultMap">
         SELECT a.*,b.ID as b_id,b.NAME FROM tbl_user a , book b WHERE a.ID=b.U_ID AND a.ID = #{id}
     </select>
+  <select id="selectByCondition" parameterType="com.lyp.springboot01.authmanage.model.QueryUserVO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_user
+    where 1=1 AND
+    <if test="id != null">
+      id = #{id},
+    </if>
+    <if test="name != null">
+      name = #{name,jdbcType=VARCHAR},
+    </if>
+    <if test="sex != null">
+      sex = #{sex,jdbcType=INTEGER},
+    </if>
+    
+    <if test="role != null">
+      role = #{role,jdbcType=VARCHAR},
+    </if>
+    <if test="createTime != null">
+      create_time = #{createTime}
+    </if>
+    order by update_time desc
+  </select>
 
 
 </mapper>
