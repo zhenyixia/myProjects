@@ -1,5 +1,6 @@
 package com.lyp.springboot01;
 
+import com.lyp.springboot01.authmanage.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class RunnerTests {
     public void test2() {
         User user = new User();
         user.setName("lyp");
-        user.setPassword("123456");
+        user.setPwd("123456");
 
         redisTemplate.opsForValue().set("user2", user);
 //        String val = stringRedisTemplate.opsForValue().get("site");

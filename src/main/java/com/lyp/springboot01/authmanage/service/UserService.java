@@ -1,6 +1,7 @@
 package com.lyp.springboot01.authmanage.service;
 
 import com.lyp.springboot01.authmanage.model.User;
+import com.lyp.springboot01.common.bean.JsonResult;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,9 +11,9 @@ public interface UserService {
 
   User findById(int id);
 
-  int addUser(User user) throws Exception;
+  JsonResult addUser(User user) throws Exception;
 
-  int deleteUser(int id);
+  JsonResult deleteUser(long id);
 
   int updateUser(User user);
 

@@ -4,7 +4,9 @@ import com.lyp.springboot01.authmanage.mapper.UserMapper;
 import com.lyp.springboot01.authmanage.model.User;
 import com.lyp.springboot01.authmanage.service.UserService;
 import com.lyp.springboot01.common.bean.JsonResult;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +34,23 @@ public class UserServiceImpl implements UserService {
 
   @Transactional
   @Override
-  public int addUser(User user) throws Exception {
+  public JsonResult addUser(User user) throws Exception {
+    log.info("Begin to add user to database.");
+    user.setCreateTime(new Date());
     userMapper.insert(user);
-
-    log.info("id  is {}", user.getId());
-
-    //模拟异常 测试事务注解
-    //        String str = null;
-    //        System.out.println(str.length());
-    //        user.setName(user.getName() + "1");
-    //        userMapper.insert(user);
-
-    return 1;
+    log.info("Add user info successfully. id  is {}", user.getId());
+    return JsonResult.success("添加用户成功");
   }
 
   @Override
-  public int deleteUser(int id) {
-    return userMapper.delete(id);
+  public JsonResult deleteUser(long id) {
+    log.info("Begin to delete user by id:{}.", id);
+    int result = userMapper.delete(id);
+
+    log.info("Delete user number is: {}.", result);
+    String msg = MessageFormat.format("成功删除{0}条数据", result);
+    return JsonResult.success(msg);
+
   }
 
   @Override

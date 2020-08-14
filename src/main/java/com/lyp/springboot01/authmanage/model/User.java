@@ -1,14 +1,20 @@
 package com.lyp.springboot01.authmanage.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 public class User {
+
   private Long id;
 
+  @NotNull(message = "名字不能为空")
   private String name;
 
+  @NotNull(message = "性别不能为空")
   private Integer sex;
 
+  @NotNull(message = "密码不能为空")
   private String pwd;
 
   private String phone;
@@ -17,6 +23,8 @@ public class User {
 
   private Date createTime;
 
+
+  @JsonIgnore
   private Date updateTime;
 
   public Long getId() {

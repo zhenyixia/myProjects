@@ -1,5 +1,6 @@
 package com.lyp.springboot01.common.bean;
 
+import java.text.MessageFormat;
 import lombok.Data;
 
 /**
@@ -20,47 +21,50 @@ import lombok.Data;
  */
 public class JsonResult {
 
-    public static final boolean SUCCESS = true;
+  public static final int SUCCESS = 200;
+  public static final int FAILED = 500;
+  public static final int VALID_FAILED = 400;
 
-    public static final boolean FAIL = false;
 
-    private boolean status;
+  private int status;
 
-    private int code;
+  private String msg;
 
-    private String msg;
+  private Object data;
 
-    private Object data;
+  public JsonResult() {
 
-    public JsonResult(){
+  }
 
-    }
+  private JsonResult(int status, String msg, Object data) {
+    this.status = status;
+    this.msg = msg;
+    this.data = data;
+  }
 
-    public JsonResult(boolean status, int code, String msg, Object data) {
-        this.status = status;
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
-    }
+  public static JsonResult success(Object data) {
+    return success("操作成功", data);
+  }
 
-    public static JsonResult success(Object data) {
-        return new JsonResult(SUCCESS, 200, "ok", data);
-    }
+  public static JsonResult success(String msg) {
+    return success(msg, null);
+  }
 
-    public static JsonResult success(String msg) {
-        return new JsonResult(SUCCESS, 200, msg, null);
-    }
 
-    public static JsonResult success(String msg, Object data) {
-        return new JsonResult(SUCCESS, 200, msg, data);
-    }
+  public static JsonResult success(String msg, Object data) {
+    return response(SUCCESS, msg, data);
+  }
 
-    public static JsonResult fail(String msg) {
-        return fail(500, msg);
-    }
+  public static JsonResult response(int status, String msg, Object data) {
+    return new JsonResult(status, msg, data);
+  }
 
-    public static JsonResult fail(int code, String msg) {
-        return new JsonResult(FAIL, code, msg, null);
-    }
+  public static JsonResult fail(String msg) {
+    return response(FAILED, msg, null);
+  }
+
+  public static JsonResult validFail(String msg) {
+    return response(VALID_FAILED, msg, null);
+  }
 }
 
