@@ -20,6 +20,8 @@
         若设置值为 STATEMENT，本地会话仅用在语句执行上，对相同 SqlSession 的不同调用将不会共享数据。-->
         <setting name="localCacheScope" value="SESSION"/>
 
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+
 
     </settings>
 

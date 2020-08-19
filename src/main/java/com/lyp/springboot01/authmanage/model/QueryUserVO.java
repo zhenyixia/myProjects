@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 public class QueryUserVO {
 
-  private long id;
+  private Long id;
 
   private String name;
 
-  private int sex;
+  private Integer sex;
 
   private String role;
 
@@ -22,8 +22,8 @@ public class QueryUserVO {
   private int page;
 
   @Min(value = 1, message = "最小值不能小于1")
-  private int size;
+  private Integer size;
 
   @JsonIgnore
-  private int beginIndex;
+  private Integer beginIndex;
 }

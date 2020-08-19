@@ -10,6 +10,7 @@ mybatis:
   type-aliases-package: com.lyp.springboot01.authmanage.model
   config-location: classpath:config/mybatis-config.xml
 
+
 #数据库连接池
 spring:
   datasource:
