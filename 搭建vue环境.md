@@ -320,6 +320,46 @@ npm install webpack -g，安装完成之后输入 `webpack -v`，如果出现相
 
 设置模块源仓库： npm set registry https://registry.npm.taobao.org/
 
+查看 npm 的版本 npm -v
+
+npm install XXX(包名) 
+
+卸载安装的包 npm uninstall jquery 或 npm remove jquery
+
+查看包的详细信息 npm info jquery 
+
+查看一个包存在的所有版本号 npm view jquery versions
+
+ 查看指定包当前的最新版本 npm view jquery version
+
+下载指定版本的包 npm install jquery@3.4.1
+
+npm list 查看项目安装了哪些包
+
+npm install jquery --save  或 npm i jquery -S     注：--save 表示 在 package.json 文件中（dependencies）记录 下载包的版本信息；
+
+npm install jquery --save-dev 或 npm i jquery -D     下载开发依赖包，上一条命令是下载生产依赖包（这里就不讲开发依赖和生产依赖的区别）；
+
+npm root -g 查看全局安装包的存放位置
+
+npm audit fix  包的修复 ，一般是包的更新
+
+npm ls jquery 查看当前安装包的版本
+
+
+
+### 9，开发依赖与生产依赖
+
+开发环境依赖，仅次于dependencies的使用频率！只不过它里面的包只用于开发环境，不用于生产环境，这些包通常是单元测试或者打包工具等，例如gulp, grunt, webpack, moca, coffee等
+
+安装命令：npm install package-name --save-dev
+
+生产依赖：**dependencies** 应用依赖，或者叫做业务依赖，这是我们最常用的依赖包管理对象！它用于指定应用依赖的外部包，这些依赖是应用发布后正常执行时所需要的，但不包含测试时或者本地打包时所使用的包。
+
+安装命令 npm install package-name --save 或 npm install package-name -S
+
+总结:开发依赖相当于maven中的test。生产依赖是代码运行真正要用到的业务依赖，相当于maven中的compile
+
 
 
 

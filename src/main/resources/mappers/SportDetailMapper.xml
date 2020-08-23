@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyp.springboot01.sport.dao.SportDetailMapper">
+  <resultMap id="BaseResultMap" type="com.lyp.springboot01.sport.model.SportDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="avg_speed" jdbcType="VARCHAR" property="avgSpeed" />
+    <result column="sport_date" jdbcType="DATE" property="sportDate" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="week_day" jdbcType="VARCHAR" property="weekDay" />
+    <result column="week_date_interval" jdbcType="VARCHAR" property="weekDateInterval" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, desc, address, avg_speed, sport_date, duration, begin_time, end_time, year, 
+    month, week_day, week_date_interval, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_sport_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_sport_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lyp.springboot01.sport.model.SportDetail">
+    insert into tbl_sport_detail (id, name, desc, 
+      address, avg_speed, sport_date, 
+      duration, begin_time, end_time, 
+      year, month, week_day, 
+      week_date_interval, update_time)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{avgSpeed,jdbcType=VARCHAR}, #{sportDate,jdbcType=DATE}, 
+      #{duration,jdbcType=INTEGER}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, #{weekDay,jdbcType=VARCHAR}, 
+      #{weekDateInterval,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lyp.springboot01.sport.model.SportDetail">
+    insert into tbl_sport_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="desc != null">
+        desc,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="avgSpeed != null">
+        avg_speed,
+      </if>
+      <if test="sportDate != null">
+        sport_date,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="beginTime != null">
+        begin_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="weekDay != null">
+        week_day,
+      </if>
+      <if test="weekDateInterval != null">
+        week_date_interval,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="avgSpeed != null">
+        #{avgSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="sportDate != null">
+        #{sportDate,jdbcType=DATE},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="beginTime != null">
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="weekDay != null">
+        #{weekDay,jdbcType=VARCHAR},
+      </if>
+      <if test="weekDateInterval != null">
+        #{weekDateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>
