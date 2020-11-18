@@ -1,7 +1,7 @@
 package com.lyp.springboot01.authmanage.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.lyp.springboot01.common.utils.EmailUtils;
+import com.lyp.springboot01.common.util.EmailUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

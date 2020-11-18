@@ -11,7 +11,7 @@ import springfox.documentation.spring.web.SpringfoxWebMvcConfiguration;
 
 @EnableCaching
 @SpringBootApplication
-@MapperScan("com.lyp.springboot01.authmanage.mapper")
+@MapperScan("com.lyp.springboot01.*.mapper")
 @ConditionalOnClass(SpringfoxWebMvcConfiguration.class)
 public class Runner implements WebMvcConfigurer {
 

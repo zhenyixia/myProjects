@@ -1,23 +1,30 @@
-package com.lyp.springboot01.common.utils;
+package com.lyp.springboot01.common.util;
 
+import com.lyp.springboot01.common.exception.MyException;
+import com.lyp.springboot01.sport.model.RunDetailVO;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * excel工具类
@@ -30,9 +37,9 @@ public class ExcelUtils {
   private static final DecimalFormat DECIMAL_FORMAT_PERCENT = new DecimalFormat(
       "##.00%");//格式化分比格式，后面不足2位的用0补齐
 
-//	private static final DecimalFormat df_per_ = new DecimalFormat("0.00%");//格式化分比格式，后面不足2位的用0补齐,比如0.00,%0.01%
+  //	private static final DecimalFormat df_per_ = new DecimalFormat("0.00%");//格式化分比格式，后面不足2位的用0补齐,比如0.00,%0.01%
 
-//	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); // 格式化日期字符串
+  //	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); // 格式化日期字符串
 
   private static final FastDateFormat FAST_DATE_FORMAT = FastDateFormat
       .getInstance("yyyy/MM/dd");
@@ -77,7 +84,6 @@ public class ExcelUtils {
         //2007版本的excel，用.xlsx结尾
         wookbook = new XSSFWorkbook(fis);//得到工作簿
       }
-
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -112,11 +118,15 @@ public class ExcelUtils {
     System.out.println(allRows);
   }
 
-
   /**
    * 获取excel 单元格数据
    */
   public static String getCellValue(Cell cell) {
+    //判断是否为null或空串
+    if (cell == null || cell.toString().trim().equals("")) {
+      return "";
+    }
+
     Object value = null;
     switch (cell.getCellTypeEnum()) {
       case _NONE:
@@ -165,4 +175,87 @@ public class ExcelUtils {
     return String.valueOf(value);
   }
 
+  /**
+   * 获取excel 单元格数据
+   */
+  public static String getCellValue2(Cell cell) {
+    //判断是否为null或空串
+    if (cell == null || cell.toString().trim().equals("")) {
+      return "";
+    }
+
+    //下面这几行应该是获取单元的位置比如：A1
+    CellReference cellRef = new CellReference(1, cell.getColumnIndex());
+    System.out.print(cellRef.formatAsString());
+    System.out.print(" - ");
+
+    DataFormatter formatter = new DataFormatter();
+    String text = formatter.formatCellValue(cell);
+    System.out.println(text);
+
+    return text;
+  }
+
+  public static <T> List<T> readList(MultipartFile file, int sheetNo, Class<T> clazz, String[] heads, String[] attrs) throws MyException {
+    try {
+      InputStream inputStream = file.getInputStream();
+      Workbook workbook = new XSSFWorkbook(inputStream);
+      Sheet sheet = workbook.getSheetAt(sheetNo);
+
+      //读取标题行，并找出head中的名称在excel标题中实际的下标。
+      List<String> headList = new ArrayList<>(Arrays.asList(heads));
+      List<Integer> headInColumnIndexes = new ArrayList<>(Collections.nCopies(heads.length, -1));
+      Row titleRow = sheet.getRow(0);
+      for (Cell cell : titleRow) {
+        String val = getCellValue2(cell);
+        int index = headList.indexOf(val);
+        if (index != -1) {
+          headInColumnIndexes.set(index, cell.getColumnIndex());
+        }
+      }
+
+      if (headInColumnIndexes.contains(-1)) {
+        throw new MyException("读取标题行有误，应该包含这些：{0}。", headList);
+      }
+
+      int totalRow = sheet.getLastRowNum();
+      List<T> objects = new ArrayList<>();
+      for (int i = 1; i < totalRow; i++) {
+        Row row = sheet.getRow(i);
+
+        //预读一行，如果这一行为空，则直接终止继续读
+        if (isNullRow(row)) {
+          break;
+        }
+
+        T t = clazz.newInstance();
+        for (int j = 0, len = heads.length; j < len; j++) {
+          Cell cell = row.getCell(headInColumnIndexes.get(j));
+          CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
+          System.out.print(cellRef.formatAsString());
+          System.out.print(" - ");
+          String attr = attrs[j];
+          String val = getCellValue2(cell);
+          if (StringUtils.isBlank(val)) {
+            throw new MyException("第" + (i + 1) + "行，第" + (headInColumnIndexes.get(j) + 1) + "列为空。");
+          }
+          BeanUtils.setProperty(t, attr, val);
+        }
+        objects.add(t);
+      }
+      return objects;
+    } catch (IOException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+      throw new MyException("导入失败：" + e.getMessage());
+    }
+  }
+
+  private static boolean isNullRow(Row row) {
+    for (Cell cell : row) {
+      String val = getCellValue(cell);
+      if (StringUtils.isNotBlank(val)) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

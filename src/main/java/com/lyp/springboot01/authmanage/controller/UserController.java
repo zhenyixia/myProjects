@@ -1,6 +1,6 @@
 package com.lyp.springboot01.authmanage.controller;
 
-import static com.lyp.springboot01.common.utils.ErrorHandlUtils.processBindResult;
+import static com.lyp.springboot01.common.util.ErrorHandlUtils.processBindResult;
 
 import com.lyp.springboot01.authmanage.model.QueryUserVO;
 import com.lyp.springboot01.authmanage.model.User;

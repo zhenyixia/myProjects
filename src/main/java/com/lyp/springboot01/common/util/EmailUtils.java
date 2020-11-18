@@ -1,4 +1,4 @@
-package com.lyp.springboot01.common.utils;
+package com.lyp.springboot01.common.util;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 import lombok.extern.slf4j.Slf4j;

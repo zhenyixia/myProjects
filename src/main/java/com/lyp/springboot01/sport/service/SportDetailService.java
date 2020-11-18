@@ -1,8 +1,8 @@
 package com.lyp.springboot01.sport.service;
 
 import com.lyp.springboot01.common.bean.JsonResult;
-import com.lyp.springboot01.sport.model.QuerySportVO;
-import com.lyp.springboot01.sport.model.SportDetail;
+import com.lyp.springboot01.sport.model.QueryRunVO;
+import com.lyp.springboot01.sport.model.RunDetail;
 import javax.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +11,7 @@ public interface SportDetailService {
   /**
    * 增加一次运动
    */
-  JsonResult addOneSport(SportDetail sportDetail);
+  JsonResult addOneSport(RunDetail runDetail);
 
   /**
    * 批量添加运动
@@ -19,5 +19,5 @@ public interface SportDetailService {
    */
   JsonResult batchAdd(MultipartFile sportDetails);
 
-  JsonResult findByCondition(@Valid QuerySportVO queryVO);
+  JsonResult findByCondition(@Valid QueryRunVO queryVO);
 }

@@ -1,4 +1,4 @@
-package com.lyp.springboot01.common.utils;
+package com.lyp.springboot01.common.util;
 
 import com.lyp.springboot01.common.exception.MyException;
 import org.springframework.validation.BindingResult;

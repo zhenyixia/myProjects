@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyp.springboot01.sport.mapper.RunDetailMapper">
+	<resultMap id="BaseResultMap" type="com.lyp.springboot01.sport.model.RunDetail">
+		<id column="id" jdbcType="BIGINT" property="id"/>
+		<result column="kilometer" jdbcType="DECIMAL" property="kilometer"/>
+		<result column="address" jdbcType="VARCHAR" property="address"/>
+		<result column="run_date" jdbcType="TIMESTAMP" property="runDate"/>
+		<result column="run_second" jdbcType="INTEGER" property="runSecond"/>
+		<result column="time_by_km" jdbcType="INTEGER" property="timeByKm"/>
+		<result column="km_by_hour" jdbcType="DECIMAL" property="kmByHour"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+    id, kilometer, address, run_date, run_second, time_by_km, km_by_hour, update_time
+  </sql>
+	<insert id="batchInsert">
+		insert into tbl_run_detail (kilometer, address,run_date, run_second, time_by_km,km_by_hour) values
+		<foreach collection="list" item="detail" separator=",">
+			(
+			#{detail.kilometer,jdbcType=DECIMAL}, #{detail.address,jdbcType=VARCHAR},#{detail.runDate,jdbcType=TIMESTAMP},
+			#{detail.runSecond,jdbcType=INTEGER}, #{detail.timeByKm,jdbcType=INTEGER},#{detail.kmByHour,jdbcType=DECIMAL}
+			)
+		</foreach>
+	</insert>
+	<select id="selectByMonth" resultType="com.lyp.springboot01.sport.model.RunDetail">
+		select
+		<include refid="Base_Column_List"/>
+		from tbl_run_detail
+		<where>
+			<if test="year != null">
+				and year(run_date) = #{year}
+			</if>
+			<if test="month != null">
+				and month(run_date) = #{month}
+			</if>
+		</where>
+	</select>
+
+</mapper>
