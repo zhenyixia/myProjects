@@ -1,6 +1,7 @@
 package com.lyp.springboot01.sport.controller;
 
 import com.lyp.springboot01.common.bean.JsonResult;
+import com.lyp.springboot01.sport.model.BatchRunDetailVO;
 import com.lyp.springboot01.sport.model.QueryRunVO;
 import com.lyp.springboot01.sport.service.RunService;
 import io.swagger.annotations.Api;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Slf4j
 @RestController
-@RequestMapping("/run")
+@RequestMapping(value = "/run", produces = {"application/json;charset=utf-8"})
 @Api(tags = "跑步api操作")
 public class RunController {
 
@@ -33,10 +32,22 @@ public class RunController {
    * @return JsonResult
    */
   @ApiOperation(value = "导入一周的跑步数据")
-  @PostMapping(value = "add")
+  @PostMapping(value = "import")
   public JsonResult importOneWeek(MultipartFile file) {
     log.info("Begin to come in import one week run info interface.");
     return runService.importOneWeekRun(file);
+  }
+
+  /**
+   * 列举当前月份每天的运动信息，加上总运动次数，总跑步公里数
+   *
+   * @return JsonResult
+   */
+  @ApiOperation(value = "增加跑步信息")
+  @PostMapping(value = "add/run/list")
+  public JsonResult addRunInfo(@RequestBody BatchRunDetailVO batchRunDetailVO) {
+    log.info("Begin to come in add run info interface.");
+    return runService.addRunDetails(batchRunDetailVO);
   }
 
   /**

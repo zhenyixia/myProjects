@@ -1,5 +1,6 @@
 package com.lyp.springboot01.sport.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
@@ -28,5 +29,6 @@ public class RunDetail {
    */
   private BigDecimal timeByKm;
 
+  @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
   private Date runDate;
 }

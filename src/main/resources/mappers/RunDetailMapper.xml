@@ -23,9 +23,7 @@
 		</foreach>
 	</insert>
 	<select id="selectByMonth" resultType="com.lyp.springboot01.sport.model.RunDetail">
-		select
-		<include refid="Base_Column_List"/>
-		from tbl_run_detail
+		select	<include refid="Base_Column_List"/>	from tbl_run_detail
 		<where>
 			<if test="year != null">
 				and year(run_date) = #{year}

@@ -1,6 +1,7 @@
 package com.lyp.springboot01.sport.service;
 
 import com.lyp.springboot01.common.bean.JsonResult;
+import com.lyp.springboot01.sport.model.BatchRunDetailVO;
 import com.lyp.springboot01.sport.model.QueryRunVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,4 +21,11 @@ public interface RunService {
    * @param queryVO
    */
   JsonResult listCurMonth(QueryRunVO queryVO);
+
+  /**
+   * 批量添加跑步信息
+   * @param runDetailVOS
+   * @return
+   */
+  JsonResult addRunDetails(BatchRunDetailVO runDetailVOS);
 }
